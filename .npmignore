@@ -1,0 +1,41 @@
+# Source files
+credentials/
+nodes/
+test/
+scripts/
+
+# Config files
+tsconfig.json
+.eslintrc.js
+.prettierrc
+jest.config.js
+gulpfile.js
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Test coverage
+coverage/
+
+# Git files
+.git/
+.gitignore
+.github/
+
+# Documentation (keep README and LICENSE)
+COMMERCIAL_LICENSE.md
+LICENSING_FAQ.md
+
+# Development files
+*.log
+.env*
+*.tmp
+.DS_Store
+Thumbs.db
+
+# TypeScript source maps (optional)
+# *.map

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect width="64" height="64" rx="8" fill="#002D74"/>
+  <path d="M32 12L16 22v20l16 10 16-10V22L32 12z" fill="#002D74" stroke="#00B4E6" stroke-width="2"/>
+  <path d="M32 16L20 24v16l12 8 12-8V24L32 16z" fill="#00B4E6"/>
+  <path d="M32 20l-8 5.33v10.67L32 41.33l8-5.33V25.33L32 20z" fill="#002D74"/>
+  <text x="32" y="34" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#00B4E6" text-anchor="middle">CDC</text>
+</svg>
