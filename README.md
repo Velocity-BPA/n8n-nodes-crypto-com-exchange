@@ -1,6 +1,6 @@
 # n8n-nodes-crypto-com-exchange
 
-> [Velocity BPA Licensing Notice]
+> **[Velocity BPA Licensing Notice]**
 >
 > This n8n node is licensed under the Business Source License 1.1 (BSL 1.1).
 >
@@ -8,30 +8,32 @@
 >
 > For licensing information, visit https://velobpa.com/licensing or contact licensing@velobpa.com.
 
-A comprehensive n8n community node for Crypto.com Exchange providing spot trading, derivatives, margin trading, wallet management, and market data operations with HMAC-SHA256 authentication.
+An n8n community node that integrates with the Crypto.com Exchange API, providing access to 5 core resources for cryptocurrency trading operations. This node enables automated trading, account management, market data retrieval, and position monitoring through n8n workflows.
 
-![n8n](https://img.shields.io/badge/n8n-community--node-orange)
-![Version](https://img.shields.io/badge/version-1.0.0-blue)
+![n8n Community Node](https://img.shields.io/badge/n8n-Community%20Node-blue)
 ![License](https://img.shields.io/badge/license-BSL--1.1-blue)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue)
+![Crypto.com](https://img.shields.io/badge/Crypto.com-Exchange-orange)
+![Trading](https://img.shields.io/badge/Trading-Automated-green)
+![API](https://img.shields.io/badge/API-v2-yellow)
 
 ## Features
 
-- **Spot Account Management**: View balances, transaction history, deposit/withdrawal operations
-- **Spot Trading**: Place orders (limit, market, stop), cancel orders, view order history and trades
-- **Derivatives Trading**: Manage positions, transfers between spot and derivatives accounts
-- **Margin Trading**: Borrow/repay funds, view loan and interest history
-- **Market Data**: Access real-time tickers, order books, candlesticks, and instrument data
-- **Wallet Operations**: Manage deposit addresses, withdrawals across multiple networks
-- **HMAC-SHA256 Authentication**: Secure API authentication with proper signature generation
-- **Comprehensive Error Handling**: All Crypto.com API error codes properly mapped
+- **Account Management** - Retrieve account information, balances, and trading permissions
+- **Order Operations** - Create, modify, cancel, and monitor trading orders across all supported trading pairs
+- **Trade History** - Access comprehensive trade execution data and transaction history
+- **Market Data** - Real-time and historical market data including orderbooks, tickers, and candles
+- **Position Tracking** - Monitor open positions, margin requirements, and portfolio performance
+- **Rate Limit Handling** - Built-in rate limiting and retry logic for API compliance
+- **Comprehensive Error Handling** - Detailed error messages and status codes for debugging
+- **Type Safety** - Full TypeScript support with proper type definitions
 
 ## Installation
 
 ### Community Nodes (Recommended)
 
-1. Open your n8n instance
-2. Go to **Settings** > **Community Nodes**
+1. Open n8n
+2. Go to **Settings** → **Community Nodes**
 3. Click **Install a community node**
 4. Enter `n8n-nodes-crypto-com-exchange`
 5. Click **Install**
@@ -39,237 +41,141 @@ A comprehensive n8n community node for Crypto.com Exchange providing spot tradin
 ### Manual Installation
 
 ```bash
-# Navigate to your n8n installation directory
 cd ~/.n8n
-
-# Install the package
 npm install n8n-nodes-crypto-com-exchange
 ```
 
 ### Development Installation
 
 ```bash
-# 1. Extract the zip file
-unzip n8n-nodes-crypto-com-exchange.zip
+git clone https://github.com/Velocity-BPA/n8n-nodes-crypto-com-exchange.git
 cd n8n-nodes-crypto-com-exchange
-
-# 2. Install dependencies
 npm install
-
-# 3. Build the project
 npm run build
-
-# 4. Create symlink to n8n custom nodes directory
-# For Linux/macOS:
 mkdir -p ~/.n8n/custom
 ln -s $(pwd) ~/.n8n/custom/n8n-nodes-crypto-com-exchange
-
-# For Windows (run as Administrator):
-# mklink /D %USERPROFILE%\.n8n\custom\n8n-nodes-crypto-com-exchange %CD%
-
-# 5. Restart n8n
 n8n start
 ```
 
 ## Credentials Setup
 
-### Creating API Credentials
-
-1. Log in to [Crypto.com Exchange](https://crypto.com/exchange)
-2. Navigate to **Settings** > **API Management**
-3. Create a new API key with the required permissions
-4. Save both the API Key and Secret Key securely
-
-### Configuring in n8n
-
-| Field | Description |
-|-------|-------------|
-| API Key | Your Crypto.com Exchange API Key |
-| API Secret | Your Crypto.com Exchange Secret Key |
-
-**Note**: For security, store your API credentials securely and never share them.
+| Field | Description | Required |
+|-------|-------------|----------|
+| API Key | Your Crypto.com Exchange API key | Yes |
+| Secret Key | Your Crypto.com Exchange secret key | Yes |
+| Environment | Choose between Sandbox and Production | Yes |
+| Passphrase | API key passphrase (if configured) | No |
 
 ## Resources & Operations
 
-### Spot Account (7 operations)
+### 1. Account
 
 | Operation | Description |
 |-----------|-------------|
-| Get Account Summary | Get all account balances |
-| Get Account Balance | Get balance for a specific currency |
-| Get Transaction History | List account transactions |
-| Get Deposit Address | Get crypto deposit address |
-| Create Withdrawal | Initiate a withdrawal |
-| Get Withdrawal History | List withdrawals |
-| Get Deposit History | List deposits |
+| Get Account Info | Retrieve account details and trading permissions |
+| Get Balance | Get account balances for all currencies |
+| Get Deposit History | Retrieve deposit transaction history |
+| Get Withdrawal History | Retrieve withdrawal transaction history |
+| Get Fee Rate | Get trading fee rates for specific trading pairs |
 
-### Spot Trading (7 operations)
+### 2. Order
 
 | Operation | Description |
 |-----------|-------------|
-| Create Order | Place a new order (LIMIT, MARKET, STOP_LIMIT, etc.) |
-| Cancel Order | Cancel an order by ID |
-| Cancel All Orders | Cancel all open orders |
-| Get Open Orders | List all open orders |
-| Get Order Detail | Get details of a specific order |
-| Get Order History | List historical orders |
-| Get Trades | Get trade history |
+| Create Order | Place a new buy or sell order |
+| Cancel Order | Cancel an existing open order |
+| Cancel All Orders | Cancel all open orders for a trading pair |
+| Get Order | Retrieve details of a specific order |
+| Get Open Orders | List all currently open orders |
+| Get Order History | Retrieve historical order data |
+| Modify Order | Update price or quantity of an existing order |
 
-### Derivatives (5 operations)
-
-| Operation | Description |
-|-----------|-------------|
-| Get Positions | List all open positions |
-| Get Position | Get a specific position |
-| Close Position | Close an open position |
-| Get Transfer History | List transfers between spot and derivatives |
-| Transfer | Transfer funds between spot and derivatives |
-
-### Margin (6 operations)
+### 3. Trade
 
 | Operation | Description |
 |-----------|-------------|
-| Get Margin Account | Get margin account details |
-| Borrow | Borrow funds for margin trading |
-| Repay | Repay margin loan |
-| Get Loan History | List loan history |
-| Get Interest History | List interest charges |
-| Get Margin Trading User | Get margin trading user status |
+| Get Trades | Retrieve trade execution history |
+| Get Trade by Order | Get trades for a specific order ID |
+| Get Recent Trades | Retrieve recent trade executions |
+| Get Trade Statistics | Get trading volume and performance statistics |
 
-### Market Data (7 operations)
+### 4. Market Data
 
 | Operation | Description |
 |-----------|-------------|
-| Get Instruments | List all available trading pairs |
-| Get Order Book | Get order book for an instrument |
-| Get Ticker | Get ticker data for an instrument |
-| Get All Tickers | Get ticker data for all instruments |
-| Get Public Trades | Get recent public trades |
-| Get Candlestick | Get OHLC candlestick data |
-| Get Valuations | Get price valuations |
+| Get Ticker | Retrieve current ticker information for trading pairs |
+| Get Orderbook | Get current order book data |
+| Get Candles | Retrieve historical candlestick data |
+| Get Instruments | List all available trading instruments |
+| Get Market Depth | Get market depth information |
+| Get Recent Trades | Retrieve recent public trades |
 
-### Wallet (5 operations)
+### 5. Position
 
 | Operation | Description |
 |-----------|-------------|
-| Get Currency Networks | Get available networks for a currency |
-| Get Deposit Address | Generate a deposit address |
-| Create Withdrawal | Initiate a withdrawal |
-| Get Deposit History | List deposit history |
-| Get Withdrawal History | List withdrawal history |
+| Get Positions | Retrieve current open positions |
+| Get Position by Instrument | Get position for a specific trading pair |
+| Get Margin Requirements | Retrieve margin requirements and utilization |
+| Get Portfolio Summary | Get overall portfolio performance metrics |
 
 ## Usage Examples
 
-### Get Account Balance
-
 ```javascript
-// Configure the node:
-// Resource: Spot Account
-// Operation: Get Account Summary
-// Returns all currency balances
+// Create a market buy order for Bitcoin
+{
+  "instrument_name": "BTC_USDT",
+  "side": "BUY",
+  "type": "MARKET",
+  "notional": 1000,
+  "client_oid": "my_order_001"
+}
 ```
 
-### Place a Limit Order
-
 ```javascript
-// Configure the node:
-// Resource: Spot Trading
-// Operation: Create Order
-// Instrument Name: BTC_USDT
-// Side: BUY
-// Type: LIMIT
-// Quantity: 0.001
-// Price: 40000
+// Get account balance for all currencies
+{
+  "resource": "Account",
+  "operation": "Get Balance"
+}
 ```
 
-### Get Market Data
-
 ```javascript
-// Configure the node:
-// Resource: Market Data
-// Operation: Get Candlestick
-// Instrument Name: BTC_USDT
-// Timeframe: 1h
-// Options:
-//   Count: 100
+// Retrieve recent trades for Ethereum
+{
+  "instrument_name": "ETH_USDT",
+  "start_time": 1640995200000,
+  "end_time": 1641081600000,
+  "page_size": 50
+}
 ```
 
-## API Concepts
-
-### Instrument Names
-Trading pairs are formatted as `BASE_QUOTE`, for example:
-- `BTC_USDT` - Bitcoin/Tether
-- `ETH_USDT` - Ethereum/Tether
-- `CRO_USDT` - Cronos/Tether
-
-### Order Types
-
-| Type | Description |
-|------|-------------|
-| LIMIT | Order at a specific price |
-| MARKET | Order at current market price |
-| STOP_LIMIT | Limit order triggered at stop price |
-| STOP_LOSS | Market order triggered at stop price |
-| TAKE_PROFIT_LIMIT | Limit order triggered at take profit price |
-
-### Time in Force
-
-| Value | Description |
-|-------|-------------|
-| GTC | Good Till Cancelled |
-| IOC | Immediate or Cancel |
-| FOK | Fill or Kill |
-
-### Candlestick Timeframes
-
-Supported intervals: `1m`, `5m`, `15m`, `30m`, `1h`, `4h`, `6h`, `12h`, `1D`, `7D`, `14D`, `1M`
+```javascript
+// Get real-time market data for multiple pairs
+{
+  "instrument_name": "BTC_USDT,ETH_USDT,ADA_USDT",
+  "depth": 10
+}
+```
 
 ## Error Handling
 
-The node handles all Crypto.com API error codes:
-
-| Code | Description |
-|------|-------------|
-| 0 | Success |
-| 10001 | System error |
-| 10002 | Invalid request |
-| 10004 | IP rate limit exceeded |
-| 10005 | User rate limit exceeded |
-| 10007 | Invalid signature |
-| 20001 | Insufficient balance |
-| 30003 | Invalid instrument_name |
-| 40001 | Order not found |
-
-## Security Best Practices
-
-1. **API Key Permissions**: Only enable the permissions you need
-2. **IP Whitelisting**: Restrict API access to specific IPs
-3. **Credential Storage**: Use n8n's credential system, never hardcode
-4. **Test Environment**: Test with small amounts first
-5. **Rate Limiting**: Be aware of API rate limits to avoid blocks
+| Error | Description | Solution |
+|-------|-------------|----------|
+| 401 Unauthorized | Invalid API credentials | Verify API key and secret are correct |
+| 403 Forbidden | Insufficient permissions | Check API key has required trading permissions |
+| 429 Too Many Requests | Rate limit exceeded | Implement delays between requests |
+| 10001 Invalid instrument | Trading pair not found | Verify instrument name format (e.g., BTC_USDT) |
+| 10004 Invalid quantity | Order size outside limits | Check minimum/maximum order sizes |
+| 20002 Insufficient balance | Not enough funds for order | Verify account balance before placing orders |
 
 ## Development
 
 ```bash
-# Install dependencies
 npm install
-
-# Build the project
 npm run build
-
-# Run tests
 npm test
-
-# Run tests with coverage
-npm run test:coverage
-
-# Lint code
 npm run lint
-
-# Fix linting issues
-npm run lint:fix
-
-# Watch mode for development
 npm run dev
 ```
 
@@ -287,30 +193,24 @@ This n8n community node is licensed under the **Business Source License 1.1**.
 Permitted for personal, educational, research, and internal business use.
 
 ### Commercial Use
-Use of this node within any SaaS, PaaS, hosted platform, managed service,
-or paid automation offering requires a commercial license.
+Use of this node within any SaaS, PaaS, hosted platform, managed service, or paid automation offering requires a commercial license.
 
-For licensing inquiries:
-**licensing@velobpa.com**
+For licensing inquiries: **licensing@velobpa.com**
 
 See [LICENSE](LICENSE), [COMMERCIAL_LICENSE.md](COMMERCIAL_LICENSE.md), and [LICENSING_FAQ.md](LICENSING_FAQ.md) for details.
 
 ## Contributing
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+Contributions are welcome! Please ensure:
+
+1. Code follows existing style conventions
+2. All tests pass (`npm test`)
+3. Linting passes (`npm run lint`)
+4. Documentation is updated for new features
+5. Commit messages are descriptive
 
 ## Support
 
 - **Issues**: [GitHub Issues](https://github.com/Velocity-BPA/n8n-nodes-crypto-com-exchange/issues)
-- **Documentation**: [Crypto.com Exchange API](https://exchange-docs.crypto.com/exchange/v1/rest-ws/index.html)
-- **Email**: support@velobpa.com
-
-## Acknowledgments
-
-- [Crypto.com](https://crypto.com) for their comprehensive Exchange API
-- [n8n](https://n8n.io) for the workflow automation platform
-- The n8n community for their continued support
+- **API Documentation**: [Crypto.com Exchange API](https://exchange-docs.crypto.com/spot/index.html)
+- **Community**: [Crypto.com Developer Portal](https://crypto.com/developer-platform)
